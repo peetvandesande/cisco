@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """ This script parses a CSV file and produces a Cisco config file.
 
-Longer description of this module.
+This file parses a UTF8 encoded and signed CSV file containing interface
+information and produces Cisco configuration for these interfaces.
+
+At the moment it only produces Nexus compatible output.
+
+--
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -66,22 +71,13 @@ def main():
             if line['shutdown']:
                 interfaces[name].append(line['shutdown'])
 
-    # Process interfaces data
+    # Write interfaces config
     with open(args.outfile[0], 'w', encoding='utf-8-sig') as outfile:
-        # First, print etherchannel interfaces
         for interface, config in interfaces.items():
-            if "po" in interface:
-                outfile.write('int ' + interface + '\n')
-                for line in config:
-                    outfile.write('  ' + line + '\n')
-                outfile.write('\n')
-        # Now all other interfaces
-        for interface, config in interfaces.items():
-            if "po" not in interface:
-                outfile.write('int ' + interface + '\n')
-                for line in config:
-                    outfile.write('  ' + line + '\n')
-                outfile.write('\n')
+            outfile.write('int ' + interface + '\n')
+            for line in config:
+                outfile.write('  ' + line + '\n')
+            outfile.write('\n')
 
 if __name__ == "__main__":
     main()
