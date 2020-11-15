@@ -2,15 +2,17 @@
 *credentials.json
 *config.json
 
-# Input/output data files
+# Input/output data files, except for examples
 *.csv
+!example_interfaces.csv
 
 # Actual configuration files
 *-config
 *cfg
 
-# VIM backup files
+# VIM backup and swap files
 *~
+*.swp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
