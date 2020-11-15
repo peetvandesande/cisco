@@ -1,0 +1,7 @@
+﻿interface,usage,isp,circuit id,remote device,remote interface,comment,switchport mode,switchport access vlan,switchport trunk allowed vlan,channel-group,vrf,ip address,spanning-tree port type,vpc,channel-group,shutdown
+Eth1/1,ethc,,,switch02,eth1/1,vpc peer link,trunk,,,,,,,,1,no shutdown
+Eth1/2,p2p,,,router01,ten0/1/0,,,,,,,10.1.1.1/24,,,,no shutdown
+Eth1/3,acc,,,server1,ens192,server 1,access,600,,,,,,,,no shutdown
+mgmt0,mgmt,,,switch02,mgmt0,vpc management,,,,,management,1.1.1.1/30,,,,no shutdown
+Lo0,lo,,,,,inband management,,,,,,10.0.0.1/24,,,,
+po1,trnk,,,switch02,po1,vpc peer link,trunk,,,,,,network,peer-link,,no shutdown
