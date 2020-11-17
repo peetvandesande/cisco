@@ -54,6 +54,7 @@ def main():
             description += '|' + (line['comment'].lower() if line['comment'] else '-')
             interfaces[name].append(description)
             if line['switchport mode']:
+                interfaces[name].append('switchport')
                 interfaces[name].append('switchport mode ' + line['switchport mode'])
             if line['switchport access vlan']:
                 interfaces[name].append('switchport access vlan ' + line['switchport access vlan'])
