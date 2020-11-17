@@ -45,7 +45,8 @@ def main():
             name = line['interface'].lower()
             interfaces[name] = []
             description  = 'description'
-            description += ' ' + (line['usage'].lower() if line['usage'] else '-')
+            description += ' ' + ('l3' if line['ip address'] else 'l2')
+            description += '|' + (line['usage'].lower() if line['usage'] else '-')
             description += '|' + (line['isp'].lower() if line['isp'] else '-')
             description += '|' + (line['circuit id'].lower() if line['circuit id'] else '-')
             description += '|' + (line['remote device'].lower() if line['remote device'] else '-')
