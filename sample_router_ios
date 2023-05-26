@@ -1,0 +1,86 @@
+version 15.7
+no service pad
+service timestamps debug datetime msec show-timezone
+service password-encryption
+!
+hostname router
+boot-start-marker
+boot system flash:c2900-universalk9-mz.SPA.157-3.M4.bin
+boot-end-marker
+!
+logging buffered 64000
+enable secret 5 123465981234
+!
+aaa new-model
+!
+clock timezone utc 0 0
+!
+no ip source-route
+no ip bootp server
+no ip domain lookup
+ip domain-name company.tld
+ip name-server 208.65.222.222
+!
+archive
+  log config
+    logging enable
+    logging size 200
+    notify syslog contenttype plaintext
+    hidekeys
+!
+username admin privilege 15 secret 0 password
+!
+interface Loopback0
+  description Logical loopback interface
+  ip address 10.255.255.1 255.255.255.0
+!
+interface GigabitEthernet0/0
+  description To ISP
+  ip address 100.254.1.2 255.255.255.252
+  duplex full
+  speed 100
+  no cdp enable
+  no lldp run
+  no ip proxy-arp
+!
+interface GigabitEthernet0/0
+  description To core switch
+  ip address 10.254.1.2 255.255.255.0
+  duplex auto
+  speed full
+  no ip proxy-arp
+!
+ip ftp source-interface Loopback0
+no ip http server
+no ip http secure-server
+ip http client source-interface Loopback0
+ip ssh version 2
+!
+logging host 10.10.10.10
+!
+access-list 22 permit 192.168.168.0 0.0.0.255
+!
+banner motd ^
+Private banner
+^C
+!
+line con 0
+  logging synchronous
+  transport preferred none
+  session-timeout 10
+  exec-timeout 10
+!
+line aux 0
+line vty 0 4
+  access-class 22 in vrf-also
+  transport input ssh
+  transport output none
+line vty 5 15
+  access-class 22 in vrf-also
+  transport input ssh
+  transport output none
+!
+ntp server 10.10.10.100 prefer
+ntp server 10.20.10.100
+!
+end
